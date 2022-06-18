@@ -2,6 +2,10 @@ import { Bot } from "grammy";
 import axios from "axios";
 import keys from './secret.json'
 
+/**
+ * the keys are in secret.json
+ */
+
 var telegram_key = keys.telegram_key;
 var nasa_key = keys.nasa_key;
 
