@@ -3,7 +3,7 @@ import axios from "axios";
 import keys from './secret.json'
 
 /**
- * the keys are in secret.json
+ * the keys are in secret.json (vediamo se compila)
  */
 
 var telegram_key = keys.telegram_key;
