@@ -1,6 +1,8 @@
 import { Bot } from "grammy";
 import axios from "axios";
 import keys from './secret.json'
+import { readFileSync, writeFileSync, promises as fsPromises } from 'fs';
+
 
 /**
  * the keys are in secret.json (vediamo se compila)
@@ -21,13 +23,34 @@ function showpicture(ctx:any){
                         bot.api.sendMessage(ctx.chat.id, res.data.title + "\n" + '"' + res.data.explanation + '"');
                     })
                     lastDate = res.data.date;
+
+                    try {
+                        writeFileSync('./lastDate.log', lastDate);
+                        // file written successfully
+                    } catch (err) {
+                        console.error(err);
+                    }
                 }
 
             })
 }
 
-let lastDate:any = null
+let content = undefined
 
+try{
+    content = readFileSync('./lastDate.log', {encoding:'utf8', flag:'r+'});
+}catch (e){
+    console.log('please create a file called "lastDate.log" / an error occured')
+}
+
+
+let lastDate: any = undefined
+
+if(content !== undefined){
+    lastDate = content
+}
+
+console.log('date of the last photo: ', lastDate)
 
 bot.command("start", (ctx) => {
     console.log(ctx.from);
