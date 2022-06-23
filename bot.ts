@@ -19,17 +19,24 @@ function showpicture(ctx:any){
             .then(res => {
                 console.log(res.data);
                 if (res.data.date !== lastDate) {
-                    bot.api.sendPhoto(ctx.chat.id, res.data.hdurl).then(() => {
-                        bot.api.sendMessage(ctx.chat.id, res.data.title + "\n" + '"' + res.data.explanation + '"');
-                    })
-                    lastDate = res.data.date;
+                    try{
+                        bot.api.sendPhoto(ctx.chat.id, res.data.hdurl).then(() => {
+                            bot.api.sendMessage(ctx.chat.id, res.data.title + "\n" + '"' + res.data.explanation + '"');
+                        })
+                        lastDate = res.data.date;
 
-                    try {
-                        writeFileSync('./lastDate.log', lastDate);
-                        // file written successfully
-                    } catch (err) {
-                        console.error(err);
+                        try {
+                            writeFileSync('./lastDate.log', lastDate);
+                            // file written successfully
+                        } catch (err) {
+                            console.error(err);
+                        }
+
+                    } catch(err){
+                        console.log('errore durante invio messaggi: ', err)
                     }
+
+                    
                 }
 
             })
